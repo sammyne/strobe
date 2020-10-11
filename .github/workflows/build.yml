@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         go:
-        - '1.14.8'
         - '1.15.1'
     runs-on: ubuntu-18.04
     container:
