@@ -1,5 +1,8 @@
 # strobe
 
+## Example
+- [AEAD](aead_example_test.go)
+
 ## References
 - [StrobeGo]
 - [Strobe protocol framework][strobe-spec]

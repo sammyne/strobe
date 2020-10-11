@@ -8,7 +8,7 @@ import (
 
 func (s *Strobe) beginOp(flags Flag) {
 	if flags&FlagT != 0 { // decide role and renew flags if necessary
-		if s.i0 == None {
+		if s.i0 == Undecided {
 			s.i0 = Initiator << (flags & FlagI)
 		}
 		if s.i0 == Responder {

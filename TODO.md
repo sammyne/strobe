@@ -1,5 +1,6 @@
 # TODO
 - docs
+- make the API more clear based on the meaning of framing
 
 ## 2020/10/10
 - Duplexing and running `F`
