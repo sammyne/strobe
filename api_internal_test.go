@@ -2,8 +2,26 @@ package strobe
 
 import (
 	"encoding/hex"
+	"fmt"
+	"reflect"
 	"testing"
 )
+
+func TestStrobe_Clone(t *testing.T) {
+	s, err := New("hello", Bit128)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	c := s.Clone()
+	if !reflect.DeepEqual(s, c) {
+		t.Fatal("clone make different instance")
+	}
+
+	if x, y := fmt.Sprintf("%p", s.st), fmt.Sprintf("%p", c.st); x == y {
+		t.Fatal("state isn't deeply cloned", x)
+	}
+}
 
 func TestNew(t *testing.T) {
 	s, err := New("hello", 128)

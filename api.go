@@ -73,6 +73,22 @@ func (s *Strobe) AD(data []byte, opts *Options) error {
 	return err
 }
 
+// Clone returns a deeply cloned STROBE instance.
+func (s *Strobe) Clone() *Strobe {
+	out := &Strobe{
+		curFlags:    s.curFlags,
+		initialized: s.initialized,
+		i0:          s.i0,
+		pos:         s.pos,
+		posBegin:    s.posBegin,
+		r:           s.r,
+		st:          append([]byte{}, s.st...),
+		keccakState: s.keccakState,
+	}
+
+	return out
+}
+
 // KEY sets a symmetric key. If there is already a key, the new key will be cryptographically
 // combined with it. This key will be used to produce all future cryptographic outputs from the
 // STROBE object.
