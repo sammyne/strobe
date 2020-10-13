@@ -1,14 +1,14 @@
 # strobe
 
-![build](https://github.com/sammyne/strobe-go/workflows/build/badge.svg)
+![build](https://github.com/sammyne/strobe/workflows/build/badge.svg)
 ![minimum go](https://img.shields.io/badge/go-1.15%2B-blue)
-[![codecov](https://codecov.io/gh/sammyne/strobe-go/branch/master/graph/badge.svg)](https://codecov.io/gh/sammyne/strobe-go)
+[![codecov](https://codecov.io/gh/sammyne/strobe/branch/master/graph/badge.svg)](https://codecov.io/gh/sammyne/strobe)
 [![LICENSE](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
 
 ## Installation
 
 ```bash
-go get -u github.com/sammyne/strobe-go
+go get -u github.com/sammyne/strobe
 ```
 
 ## Example
