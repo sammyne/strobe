@@ -249,12 +249,6 @@ func New(proto string, level SecurityLevel) (*Strobe, error) {
 	domain := append([]byte{1, byte(out.r), 1, 0, 1, 12 * 8}, []byte(MagicASCII)...)
 	out.mustDuplex(domain, false, false, true)
 
-	//out.renewKeccakState()
-	//fmt.Printf("%x\n", out.st)
-	//return out, nil
-
-	//fmt.Println("----")
-
 	// cSHAKE separation is done.
 	// Turn on Strobe padding and do per-proto separation
 	out.r -= 2

@@ -8,6 +8,4 @@ var (
 	// ErrInvalidSecurityLevel is the error returned by New when the specified security level is
 	// unsupported
 	ErrInvalidSecurityLevel = errors.New("only 128 or 256 bit security is supported")
-
-	//ErrNonContinuable       = errors.New("not continuable from previous operation")
 )
