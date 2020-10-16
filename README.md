@@ -2,6 +2,7 @@
 
 ![build](https://github.com/sammyne/strobe/workflows/build/badge.svg)
 ![minimum go](https://img.shields.io/badge/go-1.15%2B-blue)
+[![PkgGoDev](https://pkg.go.dev/badge/mod/github.com/sammyne/strobe)](https://pkg.go.dev/mod/github.com/sammyne/strobe)
 [![codecov](https://codecov.io/gh/sammyne/strobe/branch/main/graph/badge.svg?token=3UG7izlViG)](https://codecov.io/gh/sammyne/strobe)
 [![LICENSE](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
 
