@@ -37,8 +37,8 @@ func ExampleAEAD() {
 		panic(fmt.Sprintf("AD failed: %v", err))
 	}
 
-	mac, err := encryptor.SendMAC(32, opts)
-	if err != nil {
+	var mac [32]byte
+	if err := encryptor.SendMAC(mac[:], opts); err != nil {
 		panic(fmt.Sprintf("SendMAC failed: %v", err))
 	}
 
@@ -65,7 +65,7 @@ func ExampleAEAD() {
 		panic(fmt.Sprintf("decryptor AD failed: %v", err))
 	}
 
-	if err := decryptor.RecvMAC(mac, opts); err != nil {
+	if err := decryptor.RecvMAC(mac[:], opts); err != nil {
 		panic(fmt.Sprintf("invalid MAC: %v", err))
 	}
 

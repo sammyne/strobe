@@ -116,14 +116,14 @@ func (s *Strobe) KEY(key []byte, streaming bool) error {
 }
 
 // PRF extracts hash / pseudorandom data of the given length.
-func (s *Strobe) PRF(length int) ([]byte, error) {
-	return s.operateOnInt(FlagI|FlagA|FlagC, length, false)
+func (s *Strobe) PRF(dst []byte) error {
+	return s.output(FlagI|FlagA|FlagC, false, dst)
 }
 
 // RATCHET serves to prevent rollback.
 func (s *Strobe) RATCHET(length int) error {
-	_, err := s.operateOnInt(FlagC, length, false)
-	return err
+	zeros := make([]byte, length)
+	return s.output(FlagC, false, zeros)
 }
 
 // RecvCLR receives a message in clear text.
@@ -180,13 +180,13 @@ func (s *Strobe) SendENC(data []byte, opts *Options) ([]byte, error) {
 	return s.operate(flag, data, opts.Streaming)
 }
 
-func (s *Strobe) SendMAC(length int, opts *Options) ([]byte, error) {
+func (s *Strobe) SendMAC(dst []byte, opts *Options) error {
 	flag := FlagC | FlagT
 	if opts.Meta {
 		flag |= FlagM
 	}
 
-	return s.operateOnInt(flag, length, opts.Streaming)
+	return s.output(flag, opts.Streaming, dst)
 }
 
 // New constructs a customized STROBE engine.

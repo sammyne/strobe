@@ -31,8 +31,9 @@ func TestStrobe_AD_Streaming(t *testing.T) {
 		if err := nonStreaming.AD([]byte(c.msg1+c.msg2), &nonStreamingOpts); err != nil {
 			t.Fatalf("#%d unexpected error during non-streaming AD: %v", i, err)
 		}
-		expect, err := nonStreaming.PRF(32)
-		if err != nil {
+
+		var expect [32]byte
+		if err := nonStreaming.PRF(expect[:]); err != nil {
 			t.Fatalf("#%d unexpected error during non-streaming PRF: %v", i, err)
 		}
 
@@ -45,12 +46,12 @@ func TestStrobe_AD_Streaming(t *testing.T) {
 			t.Fatalf("#%d unexpected error during the 2nd streaming AD: %v", i, err)
 		}
 
-		got, err := streaming.PRF(32)
-		if err != nil {
+		var got [32]byte
+		if err := streaming.PRF(got[:]); err != nil {
 			t.Fatalf("#%d unexpected error during non-streaming PRF: %v", i, err)
 		}
 
-		if !bytes.Equal(expect, got) {
+		if expect != got {
 			t.Fatalf("#%d failed: expect %x, got %x\n", i, expect, got)
 		}
 	}
@@ -73,7 +74,8 @@ func TestStrobe_AD(t *testing.T) {
 				t.Fatalf("#%d-%d AD failed: %v", i, j, err)
 			}
 
-			if got, err := s.PRF(len(c.PRF)); err != nil {
+			got := make([]byte, len(c.PRF))
+			if err := s.PRF(got); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			} else if !bytes.Equal(c.PRF, got) {
 				t.Fatalf("#%d-%d failed: expect %x, got %x", i, j, c.PRF, got)
@@ -109,8 +111,8 @@ func TestStrobe_KEY(t *testing.T) {
 				t.Fatalf("#%d-%d KEY failed: %v", i, j, err)
 			}
 
-			got, err := s.PRF(len(c.PRF))
-			if err != nil {
+			got := make([]byte, len(c.PRF))
+			if err := s.PRF(got); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			}
 
@@ -148,8 +150,8 @@ func TestStrobe_RATCHET(t *testing.T) {
 				t.Fatalf("#%d-%d KEY failed: %v", i, j, err)
 			}
 
-			got, err := s.PRF(len(c.PRF))
-			if err != nil {
+			got := make([]byte, len(c.PRF))
+			if err := s.PRF(got); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			}
 
@@ -189,7 +191,8 @@ func TestStrobe_RecvCLR(t *testing.T) {
 				t.Fatalf("#%d-%d RecvCLR failed: %v", i, j, err)
 			}
 
-			if got, err := s.PRF(len(c.PRF)); err != nil {
+			got := make([]byte, len(c.PRF))
+			if err := s.PRF(got); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			} else if !bytes.Equal(c.PRF, got) {
 				t.Fatalf("#%d-%d failed: expect %x, got %x", i, j, c.PRF, got)
@@ -296,7 +299,8 @@ func TestStrobe_SendCLR(t *testing.T) {
 				t.Fatalf("#%d-%d SendCLR failed: %v", i, j, err)
 			}
 
-			if got, err := s.PRF(len(c.PRF)); err != nil {
+			got := make([]byte, len(c.PRF))
+			if err := s.PRF(got); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			} else if !bytes.Equal(c.PRF, got) {
 				t.Fatalf("#%d-%d failed: expect %x, got %x", i, j, c.PRF, got)
@@ -367,7 +371,8 @@ func TestStrobe_SendMAC(t *testing.T) {
 			_ = s.KEY(c.Key, false)
 
 			opts := strobe.Options{Meta: c.Meta}
-			if got, err := s.SendMAC(len(c.MAC), &opts); err != nil {
+			got := make([]byte, len(c.MAC))
+			if err := s.SendMAC(got, &opts); err != nil {
 				t.Fatalf("#%d-%d SendMAC failed: %v", i, j, err)
 			} else if !bytes.Equal(c.MAC, got) {
 				t.Fatalf("#%d-%d invalid MAC: expect %x, got %x", i, j, c.MAC, got)

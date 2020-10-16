@@ -106,13 +106,17 @@ func (s *Strobe) operate(flags Flag, data []byte, more bool) ([]byte, error) {
 	return nil, nil
 }
 
-func (s *Strobe) operateOnInt(flags Flag, length int, more bool) ([]byte, error) {
+func (s *Strobe) output(flags Flag, more bool, out []byte) error {
 	if !((flags&(FlagI|FlagT) != (FlagI | FlagT)) && (flags&(FlagI|FlagA) != FlagA)) {
 		panic("not supported")
 	}
 
-	data := make([]byte, length)
-	return s.operate(flags, data, more)
+	for i := range out {
+		out[i] = 0
+	}
+
+	_, err := s.operate(flags, out, more)
+	return err
 }
 
 func (s *Strobe) runF() {
