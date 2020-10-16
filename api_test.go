@@ -33,7 +33,7 @@ func TestStrobe_AD_Streaming(t *testing.T) {
 		}
 
 		var expect [32]byte
-		if err := nonStreaming.PRF(expect[:]); err != nil {
+		if err := nonStreaming.PRF(expect[:], false); err != nil {
 			t.Fatalf("#%d unexpected error during non-streaming PRF: %v", i, err)
 		}
 
@@ -47,7 +47,7 @@ func TestStrobe_AD_Streaming(t *testing.T) {
 		}
 
 		var got [32]byte
-		if err := streaming.PRF(got[:]); err != nil {
+		if err := streaming.PRF(got[:], false); err != nil {
 			t.Fatalf("#%d unexpected error during non-streaming PRF: %v", i, err)
 		}
 
@@ -75,7 +75,7 @@ func TestStrobe_AD(t *testing.T) {
 			}
 
 			got := make([]byte, len(c.PRF))
-			if err := s.PRF(got); err != nil {
+			if err := s.PRF(got, false); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			} else if !bytes.Equal(c.PRF, got) {
 				t.Fatalf("#%d-%d failed: expect %x, got %x", i, j, c.PRF, got)
@@ -112,7 +112,7 @@ func TestStrobe_KEY(t *testing.T) {
 			}
 
 			got := make([]byte, len(c.PRF))
-			if err := s.PRF(got); err != nil {
+			if err := s.PRF(got, false); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			}
 
@@ -151,7 +151,7 @@ func TestStrobe_RATCHET(t *testing.T) {
 			}
 
 			got := make([]byte, len(c.PRF))
-			if err := s.PRF(got); err != nil {
+			if err := s.PRF(got, false); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			}
 
@@ -192,7 +192,7 @@ func TestStrobe_RecvCLR(t *testing.T) {
 			}
 
 			got := make([]byte, len(c.PRF))
-			if err := s.PRF(got); err != nil {
+			if err := s.PRF(got, false); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			} else if !bytes.Equal(c.PRF, got) {
 				t.Fatalf("#%d-%d failed: expect %x, got %x", i, j, c.PRF, got)
@@ -300,7 +300,7 @@ func TestStrobe_SendCLR(t *testing.T) {
 			}
 
 			got := make([]byte, len(c.PRF))
-			if err := s.PRF(got); err != nil {
+			if err := s.PRF(got, false); err != nil {
 				t.Fatalf("#%d-%d PRF failed: %v", i, j, err)
 			} else if !bytes.Equal(c.PRF, got) {
 				t.Fatalf("#%d-%d failed: expect %x, got %x", i, j, c.PRF, got)

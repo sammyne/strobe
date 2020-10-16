@@ -33,11 +33,11 @@ type SecurityLevel int
 //
 // - M = 1<<4, "meta". If set, this flag means that the operation is handling framing, transcript
 // comments or some other sort of protocol metadata. It doesn't affect how the operation is
-// performed. This is intended to be used as described below in Section 6.3.
+// performed.
 //
 // - K = 1<<5, "keytree". This flag is reserved for a certain protocol-level countermeasure against
-// side-channel analysis. It does affect how an operation is performed. This specification does not
-// describe its use. For all operations in this specification, the K flag must be clear.
+// side-channel analysis. It does affect how an operation is performed. For all operations in this
+// STROBE specification, the K flag must be clear.
 //
 // - The flags 1<<6 and 1<<7 are reserved for future versions.
 const (
@@ -50,7 +50,7 @@ const (
 	FlagK
 )
 
-// MagicASCII specifies a human-readable STROBE version
+// MagicASCII specifies a human-readable STROBE version.
 const MagicASCII = "STROBEv1.0.2"
 
 // To disambiguate the two parties of a network protocol, STROBE assigns them each a
@@ -63,7 +63,7 @@ const (
 	// Initiator is party to a protocol who sent a message to the transport before receiving any
 	// messages from the transport.
 	Initiator Role = 1 << (iota - 1)
-	// Responder is a party is the responder who received a message from the transport before sending
+	// Responder is a party to a protocol who received a message from the transport before sending
 	// any messages to the transport.
 	// @note Respsonder has different value from that in the spec,
 	// https://strobe.sourceforge.io/specs/, which is 1.
@@ -71,6 +71,8 @@ const (
 )
 
 const (
+	// Bit128 targets a security level of 128 bits.
 	Bit128 SecurityLevel = 128
+	// Bit256 targets a security level of 256 bits.
 	Bit256 SecurityLevel = 256
 )
