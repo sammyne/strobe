@@ -152,3 +152,12 @@ func (s *Strobe) renewKeccakState() []byte {
 
 	return s.st
 }
+
+// frameIf switch on the FlagM for the given flag
+func frameIf(flag Flag, yes bool) Flag {
+	if yes {
+		flag |= FlagM
+	}
+
+	return flag
+}

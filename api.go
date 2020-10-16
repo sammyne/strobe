@@ -130,30 +130,18 @@ func (s *Strobe) RATCHET(length int) error {
 // RecvCLR don't verify the integrity of the incoming message. For this, follow SendCLR with
 // SendMAC on the sending side, and follow RecvCLR with RecvMAC on the receiving side.
 func (s *Strobe) RecvCLR(data []byte, opts *Options) error {
-	flag := FlagI | FlagA | FlagT
-	if opts.Meta {
-		flag |= FlagM
-	}
-
+	flag := frameIf(FlagI|FlagA|FlagT, opts.Meta)
 	_, err := s.operate(flag, data, opts.Streaming)
 	return err
 }
 
 func (s *Strobe) RecvENC(data []byte, opts *Options) ([]byte, error) {
-	flag := FlagI | FlagA | FlagC | FlagT
-	if opts.Meta {
-		flag |= FlagM
-	}
-
+	flag := frameIf(FlagI|FlagA|FlagC|FlagT, opts.Meta)
 	return s.operate(flag, data, opts.Streaming)
 }
 
 func (s *Strobe) RecvMAC(mac []byte, opts *Options) error {
-	flag := FlagI | FlagC | FlagT
-	if opts.Meta {
-		flag |= FlagM
-	}
-
+	flag := frameIf(FlagI|FlagC|FlagT, opts.Meta)
 	_, err := s.operate(flag, mac, opts.Streaming)
 	return err
 }
@@ -162,30 +150,18 @@ func (s *Strobe) RecvMAC(mac []byte, opts *Options) error {
 // If opts.Meta is set, the data serves for framing, such as specifying message type and length
 // before sending the actual message.
 func (s *Strobe) SendCLR(data []byte, opts *Options) error {
-	flag := FlagA | FlagT
-	if opts.Meta {
-		flag |= FlagM
-	}
-
+	flag := frameIf(FlagA|FlagT, opts.Meta)
 	_, err := s.operate(flag, data, opts.Streaming)
 	return err
 }
 
 func (s *Strobe) SendENC(data []byte, opts *Options) ([]byte, error) {
-	flag := FlagA | FlagC | FlagT
-	if opts.Meta {
-		flag |= FlagM
-	}
-
+	flag := frameIf(FlagA|FlagC|FlagT, opts.Meta)
 	return s.operate(flag, data, opts.Streaming)
 }
 
 func (s *Strobe) SendMAC(dst []byte, opts *Options) error {
-	flag := FlagC | FlagT
-	if opts.Meta {
-		flag |= FlagM
-	}
-
+	flag := frameIf(FlagC|FlagT, opts.Meta)
 	return s.output(flag, opts.Streaming, dst)
 }
 
