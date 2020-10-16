@@ -28,11 +28,14 @@ func (s *Strobe) mustDuplex(data []byte, cbefore, cafter, forceF bool) {
 		panic("both cbefore and cafter are set")
 	}
 
+	var maskBefore byte
+	if cbefore {
+		maskBefore = 0xff
+	}
+
 	// @TODO: optimize with bitmask
 	for i := range data {
-		if cbefore {
-			data[i] ^= s.st[s.pos]
-		}
+		data[i] ^= (s.st[s.pos] & maskBefore)
 		s.st[s.pos] ^= data[i]
 		if cafter {
 			data[i] = s.st[s.pos]
