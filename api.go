@@ -67,8 +67,6 @@ type Strobe struct {
 //
 // All Strobe protocols must begin with an AD operation containing a domain separation string.
 //
-// @dev data WILL BE MODIFIED IN PLACED.
-//
 // Further reference sees <6.1.1. AD: Provide associated data>:
 // https://strobe.sourceforge.io/specs/#ops.bare.ad
 func (s *Strobe) AD(data []byte, opts *Options) error {
